@@ -46,3 +46,7 @@ Portofolio statis berbasis HTML, CSS, dan JavaScript biasa. Project ini sengaja 
 ## Catatan pengujian
 
 Pemeriksaan lokal meliputi syntax JavaScript dengan Node.js, parsing semua HTML, keseimbangan kurung CSS, referensi aset lokal, integritas ZIP, dan pembandingan hash aset gambar/audio dengan arsip sumber. Pengujian browser end-to-end, pemutaran audio live, dan deployment ke akun Vercel belum dijalankan dari lingkungan ini.
+
+
+### Canvas grid background
+The canvas-style grid is drawn entirely with CSS gradients in `style.css` (`body::before`). It is responsive and uses low-opacity lines plus subtle blue/cyan radial highlights. No JPG/PNG background image is used.
