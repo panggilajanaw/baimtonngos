@@ -64,19 +64,6 @@
 
     let requestInFlight = false;
     let hasPlayed = false;
-    const continuityKey = 'portfolio-audio-continuity-v1';
-    let resumeAfterNavigation = false;
-    try {
-      const previous = JSON.parse(sessionStorage.getItem(continuityKey) || 'null');
-      if (previous && previous.src === MUSIC_SOURCE && previous.playing === true) {
-        resumeAfterNavigation = true;
-        audio.addEventListener('loadedmetadata', () => {
-          if (Number.isFinite(previous.time) && previous.time > 0 && previous.time < audio.duration) {
-            audio.currentTime = previous.time;
-          }
-        }, { once: true });
-      }
-    } catch (_) { /* Storage may be disabled; playback controls still work. */ }
 
     const setIdle = (message = 'Audio standby') => {
       dock.classList.remove('is-playing', 'is-loading');
@@ -105,39 +92,25 @@
     button.addEventListener('click', async () => {
       if (requestInFlight) return;
       if (!audio.paused && !audio.ended) {
-        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: false, time: audio.currentTime })); } catch (_) {}
         audio.pause();
         return;
       }
-
       requestInFlight = true;
       dock.classList.add('is-loading');
       status.textContent = 'Connecting audio…';
       button.disabled = true;
       try {
         await audio.play();
-        // The `playing` event controls the UI, not the play() promise alone.
-      } catch (error) {
+      } catch (_) {
         setIdle('Audio unavailable — try again');
       }
     });
 
-    audio.addEventListener('playing', () => {
-      setPlaying();
-      try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
-    });
-    audio.addEventListener('timeupdate', () => {
-      if (!audio.paused && !audio.ended) {
-        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
-      }
-    });
+    audio.addEventListener('playing', setPlaying);
     audio.addEventListener('pause', () => {
       if (!audio.ended) setIdle(hasPlayed ? 'Playback paused' : 'Audio standby');
     });
-    audio.addEventListener('ended', () => {
-      try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: false, time: 0 })); } catch (_) {}
-      setIdle('Track finished');
-    });
+    audio.addEventListener('ended', () => setIdle('Track finished'));
     audio.addEventListener('error', () => setIdle('Audio unavailable — try again'));
     audio.addEventListener('waiting', () => {
       if (!audio.paused) status.textContent = 'Buffering…';
@@ -148,29 +121,6 @@
     audio.addEventListener('canplay', () => {
       if (!audio.paused && !audio.ended) status.textContent = 'Now playing';
     });
-    // Browsers destroy document audio during full-page navigation. Remember the
-    // active track/time and attempt a resume on the next standard page. Browsers
-    // may block that attempt; in that case the dock remains truthful and clickable.
-    window.addEventListener('pagehide', () => {
-      if (!audio.paused && !audio.ended) {
-        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
-      }
-    });
-    if (resumeAfterNavigation) {
-      const resume = async () => {
-        try {
-          const previous = JSON.parse(sessionStorage.getItem(continuityKey) || 'null');
-          if (previous && previous.src === MUSIC_SOURCE && previous.playing === true) {
-            if (Number.isFinite(previous.time) && previous.time > 0) audio.currentTime = previous.time;
-            await audio.play();
-          }
-        } catch (_) {
-          setIdle('Tap Play Music to resume');
-        }
-      };
-      if (audio.readyState >= 1) resume();
-      else audio.addEventListener('loadedmetadata', resume, { once: true });
-    }
   }
 
   /* ------------------------ Scroll progress line ----------------------- */
@@ -259,12 +209,99 @@
     candidates.forEach((element) => observer.observe(element));
   }
 
+  /* ---------------- Persistent audio navigation ---------------------- */
+  // Internal page changes are fetched and swapped without unloading this document.
+  // The audio element, particle canvas and floating dock therefore remain alive.
+  let navigationBusy = false;
+  function mountSoftNavigation() {
+    document.addEventListener('click', async (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (link.target === '_blank' || link.hasAttribute('download')) return;
+      const url = new URL(link.href, location.href);
+      if (url.origin !== location.origin || !/\.html?$/.test(url.pathname)) return;
+      if (url.pathname.endsWith('/pacar.html')) return;
+      if (url.pathname === location.pathname && !url.hash) return;
+      if (navigationBusy) return;
+      event.preventDefault();
+      navigationBusy = true;
+      document.documentElement.classList.add('page-transitioning');
+      try {
+        const response = await fetch(url.href, { headers: { 'X-Requested-With': 'portfolio-navigation' } });
+        if (!response.ok) throw new Error('Navigation request failed');
+        const html = await response.text();
+        const nextDoc = new DOMParser().parseFromString(html, 'text/html');
+        const nextMain = nextDoc.querySelector('main');
+        const currentMain = document.querySelector('main');
+        if (!nextMain || !currentMain) throw new Error('Page layout not compatible');
+
+        // Swap only page content; shared audio and canvas are intentionally untouched.
+        const nextNav = nextDoc.querySelector('nav');
+        const currentNav = document.querySelector('nav');
+        if (nextNav && currentNav) currentNav.replaceWith(document.importNode(nextNav, true));
+        currentMain.replaceWith(document.importNode(nextMain, true));
+        const nextFooter = nextDoc.querySelector('footer');
+        const currentFooter = document.querySelector('footer');
+        if (nextFooter && currentFooter) currentFooter.replaceWith(document.importNode(nextFooter, true));
+        else if (nextFooter && !currentFooter) document.body.appendChild(document.importNode(nextFooter, true));
+        document.title = nextDoc.title || document.title;
+        history.pushState({ portfolio: true }, '', url.href);
+        window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
+        markCurrentNavigation();
+        mountScrollReveal();
+        document.body.classList.remove('page-changing');
+        document.body.classList.add('page-changed');
+        window.setTimeout(() => document.body.classList.remove('page-changed'), 420);
+        // Run inline scripts from the incoming page (e.g. contact-page actions).
+        nextDoc.querySelectorAll('main script, body > script:not([src])').forEach((oldScript) => {
+          const script = document.createElement('script');
+          for (const attr of oldScript.attributes) script.setAttribute(attr.name, attr.value);
+          script.textContent = oldScript.textContent;
+          document.body.appendChild(script);
+          script.remove();
+        });
+        window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: url.href } }));
+      } catch (error) {
+        // Reliable fallback: a normal navigation is preferable to a broken page.
+        location.href = url.href;
+      } finally {
+        navigationBusy = false;
+        document.documentElement.classList.remove('page-transitioning');
+      }
+    });
+
+    window.addEventListener('popstate', async () => {
+      // Back/forward swap content too, keeping the existing audio element alive.
+      try {
+        const response = await fetch(location.href, { headers: { 'X-Requested-With': 'portfolio-navigation' } });
+        if (!response.ok) throw new Error('History navigation failed');
+        const nextDoc = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const nextMain = nextDoc.querySelector('main');
+        const currentMain = document.querySelector('main');
+        if (!nextMain || !currentMain) throw new Error('Page layout not compatible');
+        const nextNav = nextDoc.querySelector('nav');
+        const currentNav = document.querySelector('nav');
+        if (nextNav && currentNav) currentNav.replaceWith(document.importNode(nextNav, true));
+        currentMain.replaceWith(document.importNode(nextMain, true));
+        const nextFooter = nextDoc.querySelector('footer');
+        const currentFooter = document.querySelector('footer');
+        if (nextFooter && currentFooter) currentFooter.replaceWith(document.importNode(nextFooter, true));
+        document.title = nextDoc.title || document.title;
+        markCurrentNavigation();
+        mountScrollReveal();
+        window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
+        window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: location.href } }));
+      } catch (_) { location.reload(); }
+    });
+  }
+
   function boot() {
     mountMusicDock();
     mountReadingProgress();
     mountBackToTop();
     markCurrentNavigation();
     mountScrollReveal();
+    mountSoftNavigation();
     page.classList.add('interface-ready');
   }
 
