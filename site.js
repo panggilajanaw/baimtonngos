@@ -95,13 +95,15 @@
         audio.pause();
         return;
       }
+
       requestInFlight = true;
       dock.classList.add('is-loading');
       status.textContent = 'Connecting audio…';
       button.disabled = true;
       try {
         await audio.play();
-      } catch (_) {
+        // The `playing` event controls the UI, not the play() promise alone.
+      } catch (error) {
         setIdle('Audio unavailable — try again');
       }
     });
@@ -121,6 +123,7 @@
     audio.addEventListener('canplay', () => {
       if (!audio.paused && !audio.ended) status.textContent = 'Now playing';
     });
+    window.addEventListener('pagehide', () => audio.pause(), { once: true });
   }
 
   /* ------------------------ Scroll progress line ----------------------- */
@@ -209,123 +212,12 @@
     candidates.forEach((element) => observer.observe(element));
   }
 
-  /* ---------------- Persistent audio navigation ---------------------- */
-  // Internal page changes are fetched and swapped without unloading this document.
-  // The audio element, particle canvas and floating dock therefore remain alive.
-  let navigationBusy = false;
-  function mountSoftNavigation() {
-    document.addEventListener('click', async (event) => {
-      const link = event.target.closest('a[href]');
-      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (link.target === '_blank' || link.hasAttribute('download')) return;
-      const url = new URL(link.href, location.href);
-      if (url.origin !== location.origin || !/\.html?$/.test(url.pathname)) return;
-      if (url.pathname.endsWith('/pacar.html')) return;
-      if (url.pathname === location.pathname && !url.hash) return;
-      if (navigationBusy) return;
-      event.preventDefault();
-      navigationBusy = true;
-      document.documentElement.classList.add('page-transitioning');
-      try {
-        const response = await fetch(url.href, { headers: { 'X-Requested-With': 'portfolio-navigation' } });
-        if (!response.ok) throw new Error('Navigation request failed');
-        const html = await response.text();
-        const nextDoc = new DOMParser().parseFromString(html, 'text/html');
-        const nextMain = nextDoc.querySelector('main');
-        const currentMain = document.querySelector('main');
-        if (!nextMain || !currentMain) throw new Error('Page layout not compatible');
-
-        // Swap only page content; shared audio and canvas are intentionally untouched.
-        const nextNav = nextDoc.querySelector('nav');
-        const currentNav = document.querySelector('nav');
-        if (nextNav && currentNav) currentNav.replaceWith(document.importNode(nextNav, true));
-        currentMain.replaceWith(document.importNode(nextMain, true));
-        const nextFooter = nextDoc.querySelector('footer');
-        const currentFooter = document.querySelector('footer');
-        if (nextFooter && currentFooter) currentFooter.replaceWith(document.importNode(nextFooter, true));
-        else if (nextFooter && !currentFooter) document.body.appendChild(document.importNode(nextFooter, true));
-        document.title = nextDoc.title || document.title;
-        history.pushState({ portfolio: true }, '', url.href);
-        window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
-        markCurrentNavigation();
-        mountScrollReveal();
-        enhanceEditorialReveal();
-        document.body.classList.remove('page-changing');
-        document.body.classList.add('page-changed');
-        window.setTimeout(() => document.body.classList.remove('page-changed'), 420);
-        // Run inline scripts from the incoming page (e.g. contact-page actions).
-        nextDoc.querySelectorAll('main script, body > script:not([src])').forEach((oldScript) => {
-          const script = document.createElement('script');
-          for (const attr of oldScript.attributes) script.setAttribute(attr.name, attr.value);
-          script.textContent = oldScript.textContent;
-          document.body.appendChild(script);
-          script.remove();
-        });
-        window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: url.href } }));
-      } catch (error) {
-        // Reliable fallback: a normal navigation is preferable to a broken page.
-        location.href = url.href;
-      } finally {
-        navigationBusy = false;
-        document.documentElement.classList.remove('page-transitioning');
-      }
-    });
-
-    window.addEventListener('popstate', async () => {
-      // Back/forward swap content too, keeping the existing audio element alive.
-      try {
-        const response = await fetch(location.href, { headers: { 'X-Requested-With': 'portfolio-navigation' } });
-        if (!response.ok) throw new Error('History navigation failed');
-        const nextDoc = new DOMParser().parseFromString(await response.text(), 'text/html');
-        const nextMain = nextDoc.querySelector('main');
-        const currentMain = document.querySelector('main');
-        if (!nextMain || !currentMain) throw new Error('Page layout not compatible');
-        const nextNav = nextDoc.querySelector('nav');
-        const currentNav = document.querySelector('nav');
-        if (nextNav && currentNav) currentNav.replaceWith(document.importNode(nextNav, true));
-        currentMain.replaceWith(document.importNode(nextMain, true));
-        const nextFooter = nextDoc.querySelector('footer');
-        const currentFooter = document.querySelector('footer');
-        if (nextFooter && currentFooter) currentFooter.replaceWith(document.importNode(nextFooter, true));
-        document.title = nextDoc.title || document.title;
-        markCurrentNavigation();
-        mountScrollReveal();
-        enhanceEditorialReveal();
-        window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
-        window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: location.href } }));
-      } catch (_) { location.reload(); }
-    });
-  }
-
-  function enhanceEditorialReveal() {
-    if (REDUCED_MOTION.matches || !('IntersectionObserver' in window)) return;
-    const main = document.querySelector('main');
-    if (!main) return;
-    document.documentElement.classList.add('reveal-ready');
-    const targets = main.querySelectorAll('section, .card, article, figure, h1, h2, .avatar, li');
-    targets.forEach((node, index) => {
-      if (node.closest('[data-no-reveal]')) return;
-      node.dataset.reveal = 'true';
-      node.style.transitionDelay = `${Math.min(index % 5, 4) * 55}ms`;
-    });
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
-    targets.forEach((node) => observer.observe(node));
-  }
-
   function boot() {
     mountMusicDock();
     mountReadingProgress();
     mountBackToTop();
     markCurrentNavigation();
     mountScrollReveal();
-    enhanceEditorialReveal();
-    mountSoftNavigation();
     page.classList.add('interface-ready');
   }
 
