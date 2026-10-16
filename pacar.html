@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <title>My Love ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pacar.css">
+    <script src="pacar.js" defer></script>
+</head>
+
+<body class="love-page">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="hobi.html">Hobi</a>
+        <a href="cita-cita.html">Cita-cita</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="pacar.html" class="active">My Love ❤️</a>
+    </nav>
+
+    <!-- Hati yang melayang -->
+    <div class="floating-hearts" aria-hidden="true"></div>
+
+    <main class="love-container">
+
+        <!-- Hero -->
+        <section class="love-hero">
+            <p class="love-label">A LITTLE CORNER OF MY HEART</p>
+            <h1>For My <span>Favorite Person</span> ♡</h1>
+            <p class="love-subtitle">
+                Di antara banyak hal indah di dunia,
+                aku bersyukur bisa mengenal kamu.
+            </p>
+            <a href="#surat" class="love-button">
+                Pencet ini kak 💌
+            </a>
+
+            <div class="music-control">
+                <button class="music-toggle" id="music-toggle" type="button"
+                        aria-label="Play Music" aria-pressed="false">
+                    <span class="music-icon" aria-hidden="true">▶</span>
+                    <span class="music-label">Play Music</span>
+                </button>
+                <p class="music-status" id="music-status" role="status" aria-live="polite">Music is paused.</p>
+                <audio id="background-music" preload="none">
+                    <source src="https://files.catbox.moe/z33zfv.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+            <div class="hero-heart" aria-hidden="true">♥</div>
+        </section>
+
+        <!-- Foto pacar -->
+        <section class="love-section" id="tentang-dia">
+            <p class="love-label">THE PERSON I ADORE</p>
+            <h2>Someone Special <span>♡</span></h2>
+
+            <div class="love-profile">
+                <img
+                    src="kaka.jpeg"
+                    alt="kaka"
+                    class="love-main-photo"
+                    loading="lazy"
+                >
+                <div class="love-profile-text">
+                    <h3>My Favorite Girl💗</h3>
+                    <p>
+                        Kaka punya tempat spesial di hatiku.
+                        Terima kasih sudah hadir dan menjadi
+                        bagian indah dalam hidupku yaaa.
+                    </p>
+                    <p class="love-small">
+                        LOVE UU KAKAA.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galeri -->
+        <section class="love-section" id="galeri">
+            <p class="love-label">OUR LITTLE MEMORIES</p>
+            <h2>Our <span>Gallery</span> 📸</h2>
+            <p class="love-description">
+                Beberapa foto dari orang imut yang berarti buatku.
+            </p>
+
+            <div class="love-gallery">
+                <figure class="love-photo-card">
+                    <img src="kaka2.jpeg"
+                         alt="kaka2"
+                         loading="lazy">
+                    <figcaption>Someone I Really Love♡</figcaption>
+                </figure>
+
+                <figure class="love-photo-card">
+                    <img src="kaka3.jpeg"
+                         alt="kaka"
+                         loading="lazy">
+                    <figcaption>Your lovely Smile 💗</figcaption>
+                </figure>
+
+                <figure class="love-photo-card">
+                    <img src="bareng.jpeg"
+                         alt="bareng"
+                         loading="lazy">
+                    <figcaption>Me and you 🫶</figcaption>
+                </figure>
+
+                <figure class="love-photo-card">
+                    <img src="bareng2.jpeg"
+                         alt="bareng2"
+                         loading="lazy">
+                    <figcaption>One of our memories ✨</figcaption>
+                </figure>
+            </div>
+        </section>
+
+      
+
+        <!-- Surat cinta -->
+        <section class="love-section" id="surat">
+            <p class="love-label">WORDS FROM MY HEART</p>
+            <h2>A Letter <span>For You</span> 💌</h2>
+
+            <div class="love-letter">
+                <div class="letter-icon">💌</div>
+                <p class="letter-greeting">Untuk kakaa, orang spesialnya baim,</p>
+
+                <p>
+                    Baim mungkin tidak selalu pinter mengungkapkan
+                    perasaan lewat kata-kata. Tapi baim mau kaka
+                    tahu kalau kehadiran kaka berarti kali buat baim.
+                </p>
+
+                <p>
+                    Terima kasih sudah berbagi cerita, waktu,
+                    tawa, dan banyak hal kecil sama baim.
+                    Baim harap kita bisa
+                    saling mendengarkan, menghargai, dan belajar
+                    menjadi lebih baik.
+                </p>
+
+                <p>
+                    Apa pun yang akan kita lewati nanti,
+                    semoga kita selalu punya alasan untuk
+                    saling memahami dan menjaga kenangan indah
+                    yang sudah kita buat.
+                </p>
+
+                <p class="letter-closing">
+                    With love, always ♡
+                </p>
+                <p class="letter-signature">— baimmm</p>
+
+                <button class="love-button" id="love-message-button"
+                        type="button">
+                    Pencet sekali lagi ya kakaa hehee 💗
+                </button>
+                <p id="secret-message" class="secret-message"
+                   hidden>
+                    Kalau kaka baca ini, ingat ya:
+                    kaka adalah bagian istimewa dari ceritaku. ♡
+                </p>
+            </div>
+        </section>
+
+        <!-- Penutup -->
+        <footer class="love-footer">
+            <div class="footer-heart">♥</div>
+            <h2>To be continued...</h2>
+            <p>Our story, our memories, our little universe. ✨</p>
+            <a href="index.html" class="love-back">← Kembali ke beranda</a>
+        </footer>
+
+    </main>
+</body>
+</html>
