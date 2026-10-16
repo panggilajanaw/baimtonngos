@@ -1169,3 +1169,11 @@ nav .logo::after { content: ""; display: inline-block; width: 6px; height: 6px; 
 @media (prefers-reduced-transparency: reduce) {
   body::before { opacity: .42; }
 }
+
+
+/* Persistent-page navigation transition: light, GPU-friendly opacity only. */
+main { transition: opacity 180ms ease, transform 180ms ease; }
+html.page-transitioning main { opacity: .28; transform: translateY(5px); }
+body.page-changed main { animation: page-content-arrive 360ms ease both; }
+@keyframes page-content-arrive { from { opacity: .35; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { main, body.page-changed main { animation: none !important; transition: none !important; } }
