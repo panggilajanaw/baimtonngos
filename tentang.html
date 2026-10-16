@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,51 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Saya | MyProfile</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="site.js" defer></script>
+    <script src="nav.js"></script>
     <script src="particles.js" defer></script>
+    <script src="music.js" defer></script>
 </head>
 <body>
 
-
-<nav>
-    <a href="index.html" class="logo">BiodataSaya.</a>
-    <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="tentang.html" class="active">Tentang</a></li>
-        <li><a href="hobi.html">Hobi</a></li>
-        <li><a href="cita-cita.html">Cita-cita</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-    </ul>
-</nav>
-
-
-<main>
-     <section class="hero">
-       <div class="avatar">
-    <img src="baim.jpeg" alt="baim6">
-</div>
-   <h1>Tentang <span class="highlight">Saya</span></h1>
-    <p>Berikut adalah informasi biodata diri saya.</p>
-
-    <section class="card">
-        <ul class="profile-list">
-            <li><strong>Nama Lengkap</strong><span>Baim Al Habsyih</span></li>
-            <li><strong>Sekolah</strong><span>SMK Swasta TELADAN</span></li>
-            <li><strong>Tempat Tinggal</strong><span>P. Siantar</span></li>
-            <li><strong>Umur</strong><span>16 Tahun</span></li>
-            <li><strong>Jenis Kelamin</strong><span>Laki-laki</span></li>
-            <li><strong>Hobi</strong><span>Gaming, Olahraga, Coding dikit dikit</span></li>
-            <li><strong>Cita-cita</strong><span>Sukses aminnn</span></li>
+    <nav aria-label="Navigasi utama">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="logo">BiodataSaya.</span></a>
+        <ul class="nav-links" id="site-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html" class="active" aria-current="page">Tentang</a></li>
+            <li><a href="hobi.html">Hobi</a></li>
+            <li><a href="cita-cita.html">Cita-cita</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="pacar.html">My Love ❤️</a></li>
         </ul>
-    </section>
+        <div class="nav-tools">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+        </div>
+    </nav>
 
-   
-</main>
+    <main>
+        <section class="hero">
+            <div class="avatar">
+                <img src="baim.jpeg" alt="baim6">
+            </div>
+            <h1>Tentang <span class="highlight">Saya</span></h1>
+            <p>Berikut adalah informasi biodata diri saya.</p>
+        </section>
 
-<footer>© 2026 MyProfile.</footer>
+        <section class="card">
+            <ul class="profile-list">
+                <li><strong>Nama Lengkap</strong><span>Baim Al Habsyih</span></li>
+                <li><strong>Sekolah</strong><span>SMK Swasta TELADAN</span></li>
+                <li><strong>Tempat Tinggal</strong><span>P. Siantar</span></li>
+                <li><strong>Umur</strong><span>16 Tahun</span></li>
+                <li><strong>Jenis Kelamin</strong><span>Laki-laki</span></li>
+                <li><strong>Hobi</strong><span>Gaming, Olahraga, Coding dikit dikit</span></li>
+                <li><strong>Cita-cita</strong><span>Sukses aminnn</span></li>
+            </ul>
+        </section>
+    </main>
+
+
+    <footer>© 2026 MyProfile.</footer>
 
 </body>
 </html>
