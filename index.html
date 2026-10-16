@@ -1,84 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda | Biodata Saya</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <script src="site.js" defer></script>
+    <script src="nav.js"></script>
     <script src="particles.js" defer></script>
+    <script src="music.js" defer></script>
 </head>
 <body>
 
-<!-- Minimal cinematic opening: original page content remains underneath. -->
-<div class="portfolio-intro" id="portfolio-intro" aria-label="Welcome to My Portofolio. Enjoy." role="status">
-    <div class="intro-grid" aria-hidden="true"></div>
-    <div class="intro-orbit intro-orbit-one" aria-hidden="true"></div>
-    <div class="intro-orbit intro-orbit-two" aria-hidden="true"></div>
-    <div class="intro-topline" aria-hidden="true">
-        <span class="intro-mark"><span></span><span></span><span></span></span>
-        <span class="intro-index">PERSONAL WEBSITE <i> / </i> 2026</span>
-    </div>
-    <div class="intro-center">
-        <p class="intro-eyebrow"><span class="intro-eyebrow-dot"></span> A LITTLE SPACE ON THE INTERNET</p>
-        <div class="intro-title-wrap">
-            <h1 class="intro-title"><span>Welcome to</span><span class="intro-title-second">My <em>Portofolio</em></span></h1>
+    <nav aria-label="Navigasi utama">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="logo">BiodataSaya.</span></a>
+        <ul class="nav-links" id="site-menu">
+            <li><a href="index.html" class="active" aria-current="page">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="hobi.html">Hobi</a></li>
+            <li><a href="cita-cita.html">Cita-cita</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="pacar.html">My Love ❤️</a></li>
+        </ul>
+        <div class="nav-tools">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
         </div>
-        <p class="intro-enjoy">Enjoy<span class="intro-period">.</span></p>
-        <div class="intro-progress" aria-hidden="true"><span></span></div>
-    </div>
-    <div class="intro-bottomline" aria-hidden="true">
-        <span>DESIGNED TO BE EXPLORED</span>
-        <span class="intro-scroll-hint">LET'S BEGIN <b>↘</b></span>
-    </div>
-    <button class="intro-skip" id="intro-skip" type="button" aria-label="Skip intro">Skip <span>↗</span></button>
-</div>
+    </nav>
 
-<nav>
-    <a href="index.html" class="logo">BiodataSaya.</a>
-    <ul>
-        <li><a href="index.html" class="active">Beranda</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="hobi.html">Hobi</a></li>
-        <li><a href="cita-cita.html">Cita-cita</a></li>
-        <li><a href="kontak.html">Kontak</a></li>
-    </ul>
-</nav>
+    <main>
+        <section class="hero">
+            <div class="avatar">
+                <img src="baim5.jpeg" alt="baim6">
+            </div>
+            <h1>Halo, Saya <span class="highlight">Baim Al Habsyih</span></h1>
+            <p>Selamat datang di website biodata pribadi saya.</p>
+            <p>Di sini kamu bisa mengenal lebih dekat tentang saya, hobi, dan cita-cita saya.</p>
+        </section>
+
+        <section class="card">
+            <h2>Selamat Datang!</h2>
+            <p>
+                Website ini dibuat untuk memperkenalkan diri saya
+                dan menjadi tempat saya untuk berbagi informasi tentang
+                kehidupan, minat, dan impian saya.
+            </p>
+        </section>
+    </main>
 
 
-<main class="home-main">
-    <section class="hero">
-       <div class="avatar">
-    <img src="baim5.jpeg" alt="baim6">
-</div>
-        <h1>Halo, Saya <span class="highlight">Baim Al Habsyih</span></h1>
-        <p>Selamat datang di website biodata pribadi saya.</p>
-        <p>Di sini kamu bisa mengenal lebih dekat tentang saya, hobi, dan cita-cita saya.</p>
+    <footer>© 2026 MyProfile.</footer>
 
-      
-    </section>
-
-    <section class="card">
-        <h2>Selamat Datang!</h2>
-        <p>
-            Website ini dibuat untuk memperkenalkan diri saya
-            dan menjadi tempat saya untuk berbagi informasi tentang
-            kehidupan, minat, dan impian saya.
-        </p>
-        
-    </section>
-</main>
-
-<footer>© 2026 MyProfile.</footer>
-
-    <script src="intro.js" defer></script>
 </body>
 </html>
