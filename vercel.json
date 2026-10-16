@@ -1,6 +1,12 @@
 {
-  "version": 2,
-  "outputDirectory": ".",
-  "cleanUrls": false,
-  "trailingSlash": false
+  "headers": [
+    {
+      "source": "/(.*)\\.jfif",
+      "headers": [{ "key": "Content-Type", "value": "image/jpeg" }]
+    },
+    {
+      "source": "/(.*)\\.(jpeg|png|jfif|mp3)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }]
+    }
+  ]
 }
