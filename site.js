@@ -64,6 +64,19 @@
 
     let requestInFlight = false;
     let hasPlayed = false;
+    const continuityKey = 'portfolio-audio-continuity-v1';
+    let resumeAfterNavigation = false;
+    try {
+      const previous = JSON.parse(sessionStorage.getItem(continuityKey) || 'null');
+      if (previous && previous.src === MUSIC_SOURCE && previous.playing === true) {
+        resumeAfterNavigation = true;
+        audio.addEventListener('loadedmetadata', () => {
+          if (Number.isFinite(previous.time) && previous.time > 0 && previous.time < audio.duration) {
+            audio.currentTime = previous.time;
+          }
+        }, { once: true });
+      }
+    } catch (_) { /* Storage may be disabled; playback controls still work. */ }
 
     const setIdle = (message = 'Audio standby') => {
       dock.classList.remove('is-playing', 'is-loading');
@@ -92,6 +105,7 @@
     button.addEventListener('click', async () => {
       if (requestInFlight) return;
       if (!audio.paused && !audio.ended) {
+        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: false, time: audio.currentTime })); } catch (_) {}
         audio.pause();
         return;
       }
@@ -108,11 +122,22 @@
       }
     });
 
-    audio.addEventListener('playing', setPlaying);
+    audio.addEventListener('playing', () => {
+      setPlaying();
+      try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.paused && !audio.ended) {
+        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
+      }
+    });
     audio.addEventListener('pause', () => {
       if (!audio.ended) setIdle(hasPlayed ? 'Playback paused' : 'Audio standby');
     });
-    audio.addEventListener('ended', () => setIdle('Track finished'));
+    audio.addEventListener('ended', () => {
+      try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: false, time: 0 })); } catch (_) {}
+      setIdle('Track finished');
+    });
     audio.addEventListener('error', () => setIdle('Audio unavailable — try again'));
     audio.addEventListener('waiting', () => {
       if (!audio.paused) status.textContent = 'Buffering…';
@@ -123,7 +148,29 @@
     audio.addEventListener('canplay', () => {
       if (!audio.paused && !audio.ended) status.textContent = 'Now playing';
     });
-    window.addEventListener('pagehide', () => audio.pause(), { once: true });
+    // Browsers destroy document audio during full-page navigation. Remember the
+    // active track/time and attempt a resume on the next standard page. Browsers
+    // may block that attempt; in that case the dock remains truthful and clickable.
+    window.addEventListener('pagehide', () => {
+      if (!audio.paused && !audio.ended) {
+        try { sessionStorage.setItem(continuityKey, JSON.stringify({ src: MUSIC_SOURCE, playing: true, time: audio.currentTime })); } catch (_) {}
+      }
+    });
+    if (resumeAfterNavigation) {
+      const resume = async () => {
+        try {
+          const previous = JSON.parse(sessionStorage.getItem(continuityKey) || 'null');
+          if (previous && previous.src === MUSIC_SOURCE && previous.playing === true) {
+            if (Number.isFinite(previous.time) && previous.time > 0) audio.currentTime = previous.time;
+            await audio.play();
+          }
+        } catch (_) {
+          setIdle('Tap Play Music to resume');
+        }
+      };
+      if (audio.readyState >= 1) resume();
+      else audio.addEventListener('loadedmetadata', resume, { once: true });
+    }
   }
 
   /* ------------------------ Scroll progress line ----------------------- */
