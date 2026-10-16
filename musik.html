@@ -5,51 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hobi Musik</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="site.js" defer></script>
+    <script src="nav.js"></script>
     <script src="particles.js" defer></script>
+    <script src="music.js" defer></script>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html">Beranda</a>
-        <a href="tentang.html">Tentang</a>
-        <a href="hobi.html" class="active">Hobi</a>
-        <a href="cita-cita.html">Cita-cita</a>
-        <a href="kontak.html">Kontak</a>
+    <nav aria-label="Navigasi utama">
+        <a class="brand" href="index.html" aria-label="Beranda"><span class="brand-mark" aria-hidden="true"></span></a>
+        <ul class="nav-links" id="site-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="hobi.html" class="active" aria-current="page">Hobi</a></li>
+            <li><a href="cita-cita.html">Cita-cita</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="pacar.html">My Love ❤️</a></li>
+        </ul>
+        <div class="nav-tools">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+        </div>
     </nav>
 
-    <main class="hobby-detail">
-        <img src="music.jfif" alt="music">
-		<img src="music2.jfif" alt="music2">
-
+    <main class="hobby-detail page-musik">
         <h1>Mendengarkan Musik</h1>
 
-        <p>
-            Mendengarkan musik adalah salah satu kegiatan yang paling saya
-            sukai. Musik menemani saya ketika saya sedang senang, sedih, ataupun saat bersantai.
-			Saat mendengarkan music saya lebih merasa tenang, dan dengan mendengarkan music
-			saya bisa menaikkan mood saya, saya juga tidur sambil mendengarkan music haha.
-        </p>
+        <div class="hobby-body">
+            <div class="figures">
+                <img src="music.jfif" alt="music" decoding="async">
+                <img src="music2.jfif" alt="music2" loading="lazy" decoding="async">
+            </div>
 
-        <h2>Musik Favorit Saya</h2>
-        <p>
-            Ini adalah nama nama penyanyi, band faforit saya
-			-The Beatles,
-			-OASIS,
-			-Arctic Monkey,
-			-Radiohead,
-			-Nirvana,
-			-The Smith,
-			-Lana Del Rey,
-			Masi banyak lagi sebenarnya tapi segini aja yang saya masukin.
-        </p>
+            <div class="copy">
+                <p class="lead">
+                    Mendengarkan musik adalah salah satu kegiatan yang paling saya
+                    sukai. Musik menemani saya ketika saya sedang senang, sedih, ataupun saat bersantai.
+                    Saat mendengarkan music saya lebih merasa tenang, dan dengan mendengarkan music
+                    saya bisa menaikkan mood saya, saya juga tidur sambil mendengarkan music haha.
+                </p>
 
-        <a href="hobi.html" class="back-button">
-            ← Kembali ke Hobi
-        </a>
+                <section class="copy-sec">
+                    <h2>Musik Favorit Saya</h2>
+                    <p class="list-lines">Ini adalah nama nama penyanyi, band faforit saya
+-The Beatles,
+-OASIS,
+-Arctic Monkey,
+-Radiohead,
+-Nirvana,
+-The Smith,
+-Lana Del Rey,
+Masi banyak lagi sebenarnya tapi segini aja yang saya masukin.</p>
+                </section>
+
+                <a href="hobi.html" class="back-button">
+                    ← Kembali ke Hobi
+                </a>
+            </div>
+        </div>
     </main>
 
 </body>
