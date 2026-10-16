@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,60 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontak | MyProfile</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="site.js" defer></script>
+    <script src="nav.js"></script>
     <script src="particles.js" defer></script>
+    <script src="music.js" defer></script>
 </head>
 <body>
 
+    <nav aria-label="Navigasi utama">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="logo">MyProfile.</span></a>
+        <ul class="nav-links" id="site-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="hobi.html">Hobi</a></li>
+            <li><a href="cita-cita.html">Cita-cita</a></li>
+            <li><a href="kontak.html" class="active" aria-current="page">Kontak</a></li>
+            <li><a href="pacar.html">My Love ❤️</a></li>
+        </ul>
+        <div class="nav-tools">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+        </div>
+    </nav>
 
-<nav>
-    <a href="index.html" class="logo">MyProfile.</a>
-    <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="tentang.html">Tentang</a></li>
-        <li><a href="hobi.html">Hobi</a></li>
-        <li><a href="cita-cita.html">Cita-cita</a></li>
-        <li><a href="kontak.html" class="active">Kontak</a></li>
-    </ul>
-</nav>
+    <main>
+        <section class="hero">
+            <div class="avatar">
+                <img src="baim3.jpeg" alt="baim3">
+            </div>
+            <h2>Hubungi Saya</h2>
+            <p>Silakan hubungi saya melalui media sosial berikut.</p>
+
+            <div class="social-links">
+                <a href="https://wa.me/6285355792308"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="social-btn whatsapp">
+                    WhatsApp Saya
+                </a>
+
+                <a href="https://www.instagram.com/cinn4monboyy_/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="social-btn instagram">
+                    Instagram Saya
+                </a>
+            </div>
+        </section>
+    </main>
 
 
-<main>
-    <section class="hero">
-         <div class="avatar">
-    <img src="baim3.jpeg" alt="baim3">
-</div>
-       <h2>Hubungi Saya</h2>
-<p>Silakan hubungi saya melalui media sosial berikut.</p>
+    <footer>© 2026 MyProfile.</footer>
 
-<div class="social-links">
-    <a href="https://wa.me/6285355792309"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="social-btn whatsapp">
-        WhatsApp Saya
-    </a>
-
-    <a href="https://www.instagram.com/cinn4monboyy_/"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="social-btn instagram">
-        Instagram Saya
-    </a>
-</div>
-</main>
-
-<footer>© 2026 MyProfile.</footer>
-
-<script>
-    function tampilkanPesan() {
-        document.getElementById("pesan").textContent =
-            "Halo! Terima kasih sudah mengunjungi website saya 😊";
-    }
-</script>
+    <script>
+        function tampilkanPesan() {
+            document.getElementById("pesan").textContent =
+                "Halo! Terima kasih sudah mengunjungi website saya 😊";
+        }
+    </script>
 
 </body>
 </html>
