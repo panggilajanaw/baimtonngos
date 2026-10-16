@@ -186,3 +186,58 @@
 @media (prefers-reduced-motion: reduce) {
   .floating-hearts { display: none; }
 }
+
+/* My Love receives the same future-facing details, but keeps its own music. */
+.love-page nav {
+  border-bottom-color: rgba(49,92,255,.16);
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(20px) saturate(1.25);
+}
+.love-page .music-control {
+  position: relative;
+  border-color: rgba(49,92,255,.2);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(49,92,255,.055);
+}
+.love-page .music-control::before {
+  content: "AUDIO CHANNEL / 02";
+  display: block;
+  flex: 0 0 100%;
+  color: #737b91;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .61rem;
+  letter-spacing: .14em;
+}
+.love-page .music-toggle {
+  border-color: #111;
+  border-radius: 3px;
+  background: #111;
+  color: #fff;
+  transition: transform .25s ease, background .25s ease, border-color .25s ease;
+}
+.love-page .music-toggle:hover {
+  transform: translateY(-2px);
+  border-color: #315cff;
+  background: #315cff;
+  color: #fff;
+}
+.love-page .music-toggle:focus-visible {
+  outline: 3px solid rgba(49,92,255,.42);
+  outline-offset: 4px;
+}
+.love-page .music-status { font-size: .76rem; }
+.love-page .love-photo-card {
+  border-color: rgba(49,92,255,.14);
+  border-radius: 4px;
+  transition: transform .35s cubic-bezier(.2,.75,.25,1), box-shadow .35s ease;
+}
+.love-page .love-photo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(31,44,95,.1);
+}
+.love-page .love-photo-card img { transition: transform .65s cubic-bezier(.2,.75,.25,1); }
+.love-page .love-photo-card:hover img { transform: scale(1.025); }
+@media (max-width: 480px) {
+  .love-page .music-control { padding: 10px; }
+  .love-page .music-control::before { letter-spacing: .09em; }
+}
