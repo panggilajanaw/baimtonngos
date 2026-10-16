@@ -37,6 +37,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Lightweight sequential reveal for the romantic story, photos and letter.
+    // Content and original wording stay untouched; only presentation changes.
+    const revealTargets = document.querySelectorAll(
+        ".love-hero > *, .love-section > *, .love-profile > *, .love-gallery > *, .love-letter > *, .love-footer > *"
+    );
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion && "IntersectionObserver" in window) {
+        revealTargets.forEach((element, index) => {
+            if (element.classList.contains("hero-heart") || element.matches(".floating-hearts")) return;
+            element.classList.add("love-reveal");
+            element.style.setProperty("--love-delay", `${Math.min(index % 5, 4) * 75}ms`);
+        });
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("love-visible");
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.08, rootMargin: "0px 0px -28px 0px" });
+        revealTargets.forEach((element) => {
+            if (element.classList.contains("love-reveal")) revealObserver.observe(element);
+            else element.classList.add("love-visible");
+        });
+    } else {
+        revealTargets.forEach((element) => element.classList.add("love-visible"));
+    }
+
     // Original secret-message interaction.
     if (messageButton && secretMessage) {
         messageButton.addEventListener("click", () => {
