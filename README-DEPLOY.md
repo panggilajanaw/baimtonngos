@@ -50,3 +50,11 @@ Pemeriksaan lokal meliputi syntax JavaScript dengan Node.js, parsing semua HTML,
 
 ### Canvas grid background
 The canvas-style grid is drawn entirely with CSS gradients in `style.css` (`body::before`). It is responsive and uses low-opacity lines plus subtle blue/cyan radial highlights. No JPG/PNG background image is used.
+
+
+## Update: persistent music and My Heart removal
+
+- The My Heart page is removed from the deployed site and its navigation links are removed.
+- The global music player uses one audio element that remains alive during internal `.html` navigation. Navigation fetches and swaps the page content without unloading the document, so music continues between standard portfolio pages after the visitor presses Play.
+- If the hosting server does not allow fetch-based navigation for any reason, the script falls back to a normal page load; in that fallback the browser may stop audio.
+- Music does not autoplay; the visitor must start it with the button.
