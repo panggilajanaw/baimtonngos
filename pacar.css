@@ -241,3 +241,162 @@
   .love-page .music-control { padding: 10px; }
   .love-page .music-control::before { letter-spacing: .09em; }
 }
+
+/* ================================================================
+   MY HEART — intimate editorial experience
+   Lightweight CSS motion, original copy and photographs preserved.
+   ================================================================ */
+.love-page {
+  --love-accent: #e94f86;
+  --love-deep: #321725;
+  --love-rose: #fff0f5;
+  --love-line: rgba(173, 77, 113, .19);
+  background-color: #fffafc;
+  background-image:
+    radial-gradient(ellipse at 12% 14%, rgba(255, 196, 218, .24), transparent 34%),
+    radial-gradient(ellipse at 90% 52%, rgba(228, 215, 255, .2), transparent 32%);
+}
+.love-page::before {
+  opacity: .24;
+  background-image:
+    linear-gradient(to right, transparent calc(100% - 1px), rgba(124, 54, 83, .09) 1px),
+    linear-gradient(to bottom, transparent calc(100% - 1px), rgba(124, 54, 83, .09) 1px),
+    radial-gradient(ellipse at 15% 8%, rgba(233, 79, 134, .08), transparent 36%);
+  background-size: 58px 58px, 58px 58px, 100% 100%;
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 55%, transparent 100%);
+}
+.love-page .navbar {
+  padding-inline: clamp(14px, 4vw, 54px);
+  border-bottom-color: rgba(233,79,134,.16);
+  background: rgba(255,250,252,.84);
+  box-shadow: 0 8px 35px rgba(94, 34, 59, .035);
+  backdrop-filter: blur(18px) saturate(1.3);
+}
+.love-page .navbar a { transition: color .22s ease, background .22s ease, transform .22s ease; }
+.love-page .navbar a:hover { color: var(--love-accent); transform: translateY(-1px); }
+.love-container { width: min(calc(100% - clamp(28px, 8vw, 112px)), 1060px); }
+.love-hero {
+  min-height: min(84svh, 790px);
+  padding-block: clamp(72px, 12vw, 150px);
+  isolation: isolate;
+}
+.love-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(230px, 43vw, 530px);
+  aspect-ratio: 1;
+  right: -5%; top: 50%;
+  transform: translateY(-48%);
+  border: 1px solid rgba(233,79,134,.15);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(233,79,134,.025), 0 0 0 62px rgba(233,79,134,.02), inset 0 0 80px rgba(233,79,134,.04);
+  animation: love-orbit-breathe 8s ease-in-out infinite;
+  pointer-events: none;
+}
+.love-hero::after {
+  content: "♡";
+  position: absolute;
+  right: 10%; top: 49%;
+  transform: translateY(-50%) rotate(-12deg);
+  color: rgba(233,79,134,.12);
+  font: 300 clamp(9rem, 25vw, 21rem)/1 "Cormorant Garamond", Georgia, serif;
+  pointer-events: none;
+  animation: love-heart-float 7s ease-in-out infinite;
+}
+.love-hero > * { position: relative; z-index: 1; }
+.love-label { color: #c83f73; letter-spacing: .22em; font-size: .67rem; }
+.love-hero h1 {
+  max-width: 800px;
+  font-size: clamp(3rem, 8.8vw, 7.4rem);
+  letter-spacing: -.075em;
+  line-height: .94;
+  text-wrap: balance;
+}
+.love-hero h1 span, .love-section h2 span { color: var(--love-accent); }
+.love-subtitle { max-width: 480px; color: #725c67; font-size: clamp(1rem, 1.6vw, 1.12rem); line-height: 1.95; }
+.love-button, .love-back {
+  min-height: 48px; padding: 12px 20px; border: 1px solid #d84c80; border-radius: 999px;
+  background: #d84c80; color: #fff; box-shadow: 0 8px 24px rgba(216,76,128,.15);
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.love-button:hover, .love-back:hover { background: #b93265; color: white; transform: translateY(-3px); box-shadow: 0 13px 30px rgba(216,76,128,.23); }
+.hero-heart { color: rgba(233,79,134,.12); }
+.love-section { padding-block: clamp(64px, 10vw, 112px); border-top-color: var(--love-line); }
+.love-section h2, .love-footer h2 { font-size: clamp(2rem, 5vw, 4.1rem); letter-spacing: -.06em; line-height: 1.06; text-wrap: balance; }
+.love-profile { grid-template-columns: minmax(0, .92fr) 1.08fr; gap: clamp(26px, 6vw, 80px); margin-top: clamp(30px, 5vw, 56px); }
+.love-main-photo {
+  max-height: 680px; aspect-ratio: 4 / 5; object-fit: cover; padding: 8px;
+  border: 1px solid rgba(233,79,134,.18); border-radius: 180px 180px 14px 14px;
+  background: rgba(255,255,255,.8); box-shadow: 0 24px 70px rgba(111,46,75,.12);
+}
+.love-profile-text { padding: clamp(4px, 2vw, 24px) 0; }
+.love-profile-text h3 { font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -.055em; }
+.love-profile-text p { color: #725c67; line-height: 1.95; }
+.love-small { color: #c83f73 !important; letter-spacing: .13em; }
+.love-description { color: #725c67; }
+.love-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2.6vw, 28px); margin-top: 36px; }
+.love-photo-card {
+  position: relative; padding: 8px; border: 1px solid rgba(233,79,134,.16); border-radius: 14px;
+  background: rgba(255,255,255,.78); box-shadow: 0 12px 36px rgba(111,46,75,.055);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease, border-color .3s ease;
+}
+.love-photo-card:nth-child(even) { transform: translateY(28px); }
+.love-photo-card:hover { transform: translateY(-6px); border-color: rgba(233,79,134,.4); box-shadow: 0 24px 56px rgba(111,46,75,.13); }
+.love-photo-card:nth-child(even):hover { transform: translateY(20px); }
+.love-photo-card img { aspect-ratio: 4 / 4.7; object-fit: cover; border-radius: 8px; }
+.love-photo-card figcaption { padding: 15px 12px 12px; color: #573847; font-size: .92rem; }
+.love-letter {
+  margin-top: 30px; padding: clamp(25px, 6vw, 64px); border: 1px solid rgba(233,79,134,.2);
+  border-radius: 20px; background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(255,241,247,.9));
+  box-shadow: 0 24px 75px rgba(111,46,75,.075); overflow: hidden;
+}
+.love-letter::after { content: "♡"; position: absolute; right: 18px; bottom: -70px; color: rgba(233,79,134,.07); font: 220px/1 "Cormorant Garamond", Georgia, serif; pointer-events: none; }
+.letter-icon { font-size: 2.1rem; }
+.love-letter p { position: relative; z-index: 1; max-width: 650px; color: #725c67; line-height: 2; }
+.letter-greeting, .letter-signature { color: #432536 !important; }
+.letter-closing { color: #c83f73 !important; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.6rem; font-style: italic; }
+.secret-message { position: relative; z-index: 1; border-left-color: var(--love-accent); border-radius: 0 12px 12px 0; background: #ffe7f0; line-height: 1.8; animation: love-secret-in .45s ease both; }
+.love-footer { padding: clamp(56px, 9vw, 100px) 0; border-top-color: var(--love-line); }
+.footer-heart { color: var(--love-accent); animation: love-heartbeat 2.4s ease-in-out infinite; transform-origin: center; }
+.love-footer p { color: #725c67; }
+.love-page .music-control { border: 1px solid rgba(233,79,134,.2); border-radius: 999px; padding: 9px 14px; background: rgba(255,255,255,.72); backdrop-filter: blur(12px); box-shadow: 0 12px 36px rgba(111,46,75,.07); }
+.love-page .music-control::before { content: "OUR LITTLE SOUNDTRACK"; color: #a15b78; }
+.love-page .music-toggle { border-radius: 999px; border-color: #d84c80; background: #d84c80; }
+.love-page .music-toggle:hover { background: #b93265; border-color: #b93265; }
+.love-page .music-status { color: #876b79; }
+/* Sequential reveals: each image/text enters as it approaches the viewport. */
+.love-page .love-reveal { opacity: 0; transform: translateY(24px) scale(.99); filter: blur(4px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.25,1), filter .75s ease; transition-delay: var(--love-delay, 0ms); }
+.love-page .love-reveal.love-visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+@keyframes love-orbit-breathe { 0%,100% { opacity: .75; transform: translateY(-48%) scale(.98); } 50% { opacity: 1; transform: translateY(-48%) scale(1.025); } }
+@keyframes love-heart-float { 0%,100% { transform: translateY(-48%) rotate(-12deg); } 50% { transform: translateY(-54%) rotate(-5deg); } }
+@keyframes love-heartbeat { 0%,100% { transform: scale(1); } 8% { transform: scale(1.12); } 16% { transform: scale(1); } 24% { transform: scale(1.08); } 34% { transform: scale(1); } }
+@keyframes love-secret-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+  .love-container { width: min(calc(100% - 36px), 560px); }
+  .love-hero { min-height: auto; padding: 84px 0 92px; }
+  .love-hero::before { right: -23%; top: 39%; width: 72vw; opacity: .55; }
+  .love-hero::after { right: -1%; top: 39%; font-size: 38vw; }
+  .love-hero h1 { font-size: clamp(2.9rem, 13vw, 5rem); max-width: 100%; }
+  .love-hero > :not(.hero-heart) { max-width: 100%; }
+  .love-profile { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .love-main-photo { width: min(100%, 420px); max-height: none; aspect-ratio: 4 / 4.4; margin-inline: auto; }
+  .love-profile-text { padding: 0; }
+  .love-gallery { gap: 12px; }
+  .love-photo-card { padding: 5px; border-radius: 10px; }
+  .love-photo-card:nth-child(even) { transform: translateY(14px); }
+  .love-photo-card img { aspect-ratio: 4 / 4.8; }
+  .love-photo-card figcaption { padding: 10px 8px; font-size: .8rem; }
+  .love-letter { border-radius: 15px; }
+  .love-page .music-control { width: fit-content; max-width: 100%; flex-direction: row; align-items: center; }
+}
+@media (max-width: 420px) {
+  .love-gallery { grid-template-columns: 1fr; }
+  .love-photo-card:nth-child(even), .love-photo-card:nth-child(even):hover { transform: none; }
+  .love-photo-card img { aspect-ratio: 4 / 3.7; }
+  .love-page .music-control { border-radius: 16px; align-items: flex-start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .love-page *, .love-page *::before, .love-page *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  .love-page .love-reveal { opacity: 1; transform: none; filter: none; }
+}
