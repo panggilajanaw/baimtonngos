@@ -5,51 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hobi Gaming</title>
     <link rel="stylesheet" href="style.css">
-    <script src="nav.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="site.js" defer></script>
     <script src="particles.js" defer></script>
-    <script src="music.js" defer></script>
 </head>
 <body>
 
-    <nav aria-label="Navigasi utama">
-        <a class="brand" href="index.html" aria-label="Beranda"><span class="brand-mark" aria-hidden="true"></span></a>
-        <ul class="nav-links" id="site-menu">
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="tentang.html">Tentang</a></li>
-            <li><a href="hobi.html" class="active" aria-current="page">Hobi</a></li>
-            <li><a href="cita-cita.html">Cita-cita</a></li>
-            <li><a href="kontak.html">Kontak</a></li>
-            <li><a href="pacar.html">My Love ❤️</a></li>
-        </ul>
-        <div class="nav-tools">
-            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
-        </div>
+    <nav class="navbar">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="hobi.html" class="active">Hobi</a>
+        <a href="cita-cita.html">Cita-cita</a>
+        <a href="kontak.html">Kontak</a>
     </nav>
 
-    <main class="hobby-detail page-gaming">
+    <main class="hobby-detail">
+        <img src="gaming1.png" alt="gaming1">
+		<img src="gaming2.png" alt="gaming2">
+
         <h1>Gaming</h1>
 
-        <div class="figures">
-            <img src="gaming1.png" alt="gaming1" decoding="async">
-            <img src="gaming2.png" alt="gaming2" loading="lazy" decoding="async">
-        </div>
+        <p>
+            Bermain game adalah salah satu hobi saya. Saya menikmati
+            bermain game untuk mengisi waktu luang, walaupun saya sudah jarang memiliki waktu luang.
+			Tapi dengan bermain game bersama teman, saya punya kesenangan tersendiri dan karena bermain game
+			adalah hobi saya dari dulu.
+        </p>
 
-        <div class="copy">
-            <p class="lead">
-                Bermain game adalah salah satu hobi saya. Saya menikmati
-                bermain game untuk mengisi waktu luang, walaupun saya sudah jarang memiliki waktu luang.
-                Tapi dengan bermain game bersama teman, saya punya kesenangan tersendiri dan karena bermain game
-                adalah hobi saya dari dulu.
-            </p>
-
-            <section class="copy-sec">
-                <h2>Game Yang Sering Saya Mainkan</h2>
-                <p class="list-lines">/MMORPG
-/BATTLE ROYALE
-/MOBA
-/SURVIVAL</p>
-            </section>
-        </div>
+        <h2>Game Yang Sering Saya Mainkan</h2>
+        <p>
+            
+			/MMORPG
+			/BATTLE ROYALE
+			/MOBA
+			/SURVIVAL
+        </p>
 
         <a href="hobi.html" class="back-button">
             ← Kembali ke Hobi
