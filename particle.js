@@ -57,9 +57,9 @@ function drawParticles() {
         // Cahaya partikel
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(17, 17, 17, ${p.alpha * 0.35})`;
-        ctx.shadowBlur = 0;
-        ctx.shadowColor = "transparent";
+        ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "#38bdf8";
         ctx.fill();
         ctx.shadowBlur = 0;
     }
@@ -78,7 +78,7 @@ function drawParticles() {
                 ctx.moveTo(a.x, a.y);
                 ctx.lineTo(b.x, b.y);
                 ctx.strokeStyle =
-                    `rgba(17, 17, 17, ${0.12 * (1 - distance / 115)})`;
+                    `rgba(56, 189, 248, ${0.15 * (1 - distance / 115)})`;
                 ctx.lineWidth = 0.7;
                 ctx.stroke();
             }
